@@ -6,7 +6,8 @@ M_IN_KM = 1000
 
 class InfoMessage:
 
-    def __init__(self, training_type: str, duration: float, distance: float, speed: float, calories: float):
+    def __init__(self, training_type: str, duration: float,
+                 distance: float, speed: float, calories: float):
         self.training_type = training_type
         self.duration = duration
         self.distance = distance
@@ -49,36 +50,44 @@ class Running(Training):
     CALORIES_MEAN_SPEED_SHIFT = 1.79
 
     def get_spent_calories(self) -> float:
-        calories = ((self.CALORIES_MEAN_SPEED_MULTIPLIER * self.get_mean_speed() + self.CALORIES_MEAN_SPEED_SHIFT)
+        calories = ((self.CALORIES_MEAN_SPEED_MULTIPLIER
+                    * self.get_mean_speed()
+                    + self.CALORIES_MEAN_SPEED_SHIFT)
                     * self.weight / M_IN_KM * (self.duration * 60))
         return calories
 
 
 class SportsWalking(Training):
 
-    def __init__(self, action: int, duration: float, weight: float, height: float):
+    def __init__(self, action: int, duration: float,
+                 weight: float, height: float):
         super().__init__(action, duration, weight)
         self.height = height
 
     def get_spent_calories(self) -> float:
-        calories = ((0.035 * self.weight + (self.get_mean_speed() ** 2 / self.height) * 0.029 * self.weight)
+        calories = ((0.035 * self.weight
+                    + (self.get_mean_speed() ** 2 / self.height)
+                    * 0.029 * self.weight)
                     * (self.duration * 60))
         return calories
 
 
 class Swimming(Training):
 
-    def __init__(self, action: int, duration: float, weight: float, length_pool: float, count_pool: float):
+    def __init__(self, action: int, duration: float, weight: float,
+                 length_pool: float, count_pool: float):
         super().__init__(action, duration, weight)
         self.length_pool = length_pool
         self.count_pool = count_pool
         self.LEN_STEP = 2  # переопределение атрибута LEN_STEP
 
     def get_mean_speed(self) -> float:
-        return self.length_pool * self.count_pool / M_IN_KM / (self.duration * 60)
+        return (self.length_pool * self.count_pool / M_IN_KM
+                / (self.duration * 60))
 
     def get_spent_calories(self) -> float:
-        calories = (2 * self.weight * (self.duration * 60) + 1.1 * self.get_mean_speed())
+        calories = (2 * self.weight * (self.duration * 60)
+                    + 1.1 * self.get_mean_speed())
         return calories
 
 
@@ -97,8 +106,9 @@ def read_package(workout_type: str, data: list) -> Training:
 
 def main(training: Training):
     if training is not None:
-        info = InfoMessage(training.__class__.__name__, training.duration, training.get_distance(),
-                           training.get_mean_speed(), training.get_spent_calories())
+        info = InfoMessage(training.__class__.__name__, training.duration,
+                           training.get_distance(), training.get_mean_speed(),
+                           training.get_spent_calories())
         info.show_training_info()
     else:
         print("Неизвестный тип тренировки")
