@@ -2,6 +2,13 @@
 LEN_STEP = 0.65
 LEN_STROKE = 1.38
 M_IN_KM = 1000
+# Новые константы
+CALORIES_MEAN_SPEED_MULTIPLIER = 18
+CALORIES_MEAN_SPEED_SHIFT = 1.79
+CALORIES_MEAN_SPEED_MULTIPLIER_WALK = 0.035
+CALORIES_MEAN_SPEED_MULTIPLIER_SWIM = 2
+CALORIES_MEAN_SPEED_SHIFT_SWIM = 1.1
+SECONDS_PER_MINUTE = 60
 
 
 class InfoMessage:
@@ -46,14 +53,13 @@ class Training:
 
 
 class Running(Training):
-    CALORIES_MEAN_SPEED_MULTIPLIER = 18
-    CALORIES_MEAN_SPEED_SHIFT = 1.79
 
     def get_spent_calories(self) -> float:
         calories = ((self.CALORIES_MEAN_SPEED_MULTIPLIER
                     * self.get_mean_speed()
                     + self.CALORIES_MEAN_SPEED_SHIFT)
-                    * self.weight / M_IN_KM * (self.duration * 60))
+                    * self.weight / M_IN_KM * (self.duration
+                    * SECONDS_PER_MINUTE))
         return calories
 
 
@@ -65,10 +71,10 @@ class SportsWalking(Training):
         self.height = height
 
     def get_spent_calories(self) -> float:
-        calories = ((0.035 * self.weight
+        calories = ((CALORIES_MEAN_SPEED_MULTIPLIER_WALK * self.weight
                     + (self.get_mean_speed() ** 2 / self.height)
                     * 0.029 * self.weight)
-                    * (self.duration * 60))
+                    * (self.duration * SECONDS_PER_MINUTE))
         return calories
 
 
@@ -83,11 +89,12 @@ class Swimming(Training):
 
     def get_mean_speed(self) -> float:
         return (self.length_pool * self.count_pool / M_IN_KM
-                / (self.duration * 60))
+                / (self.duration * SECONDS_PER_MINUTE))
 
     def get_spent_calories(self) -> float:
-        calories = (2 * self.weight * (self.duration * 60)
-                    + 1.1 * self.get_mean_speed())
+        calories = (CALORIES_MEAN_SPEED_MULTIPLIER_SWIM
+                    * self.weight * (self.duration * SECONDS_PER_MINUTE)
+                    + CALORIES_MEAN_SPEED_SHIFT_SWIM * self.get_mean_speed())
         return calories
 
 
