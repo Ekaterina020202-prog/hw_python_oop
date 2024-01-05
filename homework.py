@@ -148,13 +148,6 @@ class SportsWalking(Training):
         super().__init__(action, duration, weight)
         self.height = height
 
-    def get_mean_speed(self) -> float:
-        """
-        Получает среднюю скорость движения.
-        """
-        mean_speed = super().get_mean_speed()
-        return mean_speed
-
     def get_spent_calories(self) -> float:
         """
         Возвращает кол-во затраченных калорий во время спортивной ходьбы.
