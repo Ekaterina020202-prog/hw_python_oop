@@ -102,8 +102,6 @@ class Training:
 class Running(Training):
     """
     Тренировка: бег.
-    CALORIES_MEAN_SPEED_MULTIPLIER: Констант для расчета количества затраченных калорий.
-    CALORIES_MEAN_SPEED_SHIFT: Константа для расчета количества затраченных калорий.
     """
 
     CALORIES_MEAN_SPEED_MULTIPLIER: int = 18
@@ -126,8 +124,6 @@ class Running(Training):
 class SportsWalking(Training):
     """
     Тренировка: спортивная ходьба.
-    CALORIES_MEAN_SPEED_MULTIPLIER_WALK: Константа для расчета количества затраченных калорий.
-    CALORIES_MEAN_SPEED_SHIFT_WALK: Константа для расчета количества затраченных калорий.
     """
 
     CALORIES_WEIGHT_MULTIPLIER_WALK = 0.035
@@ -161,7 +157,7 @@ class SportsWalking(Training):
 
     def get_spent_calories(self) -> float:
         """
-        Возвращает количество затраченных калорий во время спортивной ходьбы.
+        Возвращает кол-во затраченных калорий во время спортивной ходьбы.
         """
         mean_speed = self.get_mean_speed() * self.KMH_IN_MSEC
         training_time_in_minutes = self.duration * self.MIN_IN_H
@@ -175,8 +171,6 @@ class SportsWalking(Training):
 class Swimming(Training):
     """
     Тренировка: плавание.
-    CALORIES_MEAN_SPEED_SHIFT_SWIM: Константа для расчета количества затраченных калорий.
-    CALORIES_MEAN_SPEED_MULTIPLIER_SWIM: Константа для расчета количества затраченных калорий.
     """
 
     LEN_STEP: float = 1.38
