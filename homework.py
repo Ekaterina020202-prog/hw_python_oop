@@ -70,7 +70,7 @@ class Training:
         """
         Возвращает дистанцию в км, пройденную во время тренировки.
         """
-        return (self.action * self.LEN_STEP) / self.M_IN_KM
+        return self.action * self.LEN_STEP / self.M_IN_KM
 
     def get_mean_speed(self) -> float:
         """
